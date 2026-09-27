@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Bengaluru Car Shortlist</title>
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--ink:#132238;--muted:#667085;--line:#e6ebf2;--ev:#2563eb;--ice:#b97700;--ok:#0f9d58;--warn:#c73a45}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+.wrap{max-width:1100px;margin:auto;padding:14px}.hero{padding:8px 2px 4px}.eyebrow{font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#4776a8}
+h1{font-size:30px;line-height:1.08;margin:6px 0 8px}.lead{font-size:15px;line-height:1.5;color:var(--muted);margin:0}
+.notice{margin:12px 0;background:#fff7e8;border:1px solid #eed9a2;border-radius:14px;padding:10px 12px;font-size:13px;line-height:1.4}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#fff;border:1px solid var(--line);padding:10px;border-radius:16px;margin:14px 0;position:sticky;top:0;z-index:5}
+label{font-size:10px;font-weight:900;text-transform:uppercase;color:var(--muted)}select,input{width:100%;margin-top:5px;border:1px solid #d8dfe8;background:#fff;border-radius:10px;padding:11px;font-size:16px}
+.search{grid-column:1/-1}.list{display:grid;gap:10px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px;box-shadow:0 8px 24px rgba(20,34,53,.06)}
+.head{display:flex;gap:10px;align-items:flex-start}.rank{width:32px;height:32px;border-radius:999px;background:#17273e;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;flex:0 0 auto}
+.name{font-size:18px;font-weight:900;line-height:1.15}.variant{font-size:12px;color:var(--muted);margin-top:3px}.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{font-size:11px;font-weight:850;border-radius:999px;padding:5px 8px;display:inline-flex}.ev{background:#e8f2ff;color:#145fab}.ice{background:#fff1ca;color:#845c00}.ok{background:#e8f8ef;color:#087b42}.stretch{background:#fdebec;color:#b82f3b}.tag{background:#edf1f5;color:#56616d}
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.m{background:#f7f9fb;border-radius:12px;padding:9px;min-width:0}.m .k{font-size:10px;text-transform:uppercase;color:var(--muted);font-weight:900}.m .v{font-size:14px;font-weight:850;margin-top:3px;line-height:1.3}.m.wide{grid-column:1/-1}.small{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.35}
+.footer{font-size:12px;line-height:1.55;color:var(--muted);padding:16px 2px 30px}
+@media(min-width:760px){.wrap{padding:24px}.controls{grid-template-columns:repeat(4,1fr)}.search{grid-column:auto}.list{grid-template-columns:repeat(2,1fr)}h1{font-size:42px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="hero">
+<div class="eyebrow">Bengaluru shortlist</div>
+<h1>Car Comparison</h1>
+<p class="lead">Mobile-first view: price, delivery time, real-world range / mileage, ACC Stop & Go, ride comfort, size, boot space and verdict.</p>
+</div>
+<div class="notice"><b>Budget rule:</b> ₹25L on-road Bengaluru is the default cap. Tata Sierra A+ Turbo AT is included as your explicit exception. BE 6 Three+ 70 is currently still marked as stretch.</div>
+
+<div class="controls">
+<label>Sort by<select id="sort">
+<option value="rank">Overall rank</option><option value="price">Price</option><option value="delivery">Delivery time</option><option value="ride">Ride comfort</option><option value="range">Range / mileage</option><option value="length">Length</option><option value="boot">Boot space</option>
+</select></label>
+<label>Order<select id="dir"><option value="asc">Low → High</option><option value="desc">High → Low</option></select></label>
+<label>Type<select id="type"><option value="all">All</option><option value="EV">EV only</option><option value="ICE">ICE only</option></select></label>
+<label class="search">Search<input id="q" placeholder="Car or variant"></label>
+</div>
+
+<div id="list" class="list"></div>
+<div class="footer">Delivery estimates can change by exact colour, dealer allocation, in-transit inventory and variant. EV range and ICE mileage are practical real-world bands, not brochure claims.</div>
+</div>
+<script>
+const cars=[
+{rank:1,name:"Kia Syros EV",variant:"X-Line ER 51.4",type:"EV",priceText:"₹22.88L",price:22.88,deliveryText:"~6–12+ weeks",delivery:63,deliveryNote:"Dealer allocation highly variable",rangeText:"~350–420 km",range:385,rideText:"Comfortable and easy-going",ride:4,lengthText:"3,995 mm",length:3995,bootText:"390–465 L",boot:427.5,acc:"Yes",tag:"Best overall buy"},
+{rank:2,name:"Tata Sierra",variant:"Accomplished+ Turbo AT",type:"ICE",priceText:"₹26.54L",price:26.54,deliveryText:"~4–8 weeks",delivery:42,deliveryNote:"Supply improved; variant/colour dependent",rangeText:"8–11 city / 14–17 hwy",range:12.5,rideText:"Butter-smooth / plushest here",ride:5,lengthText:"4,375 mm",length:4375,bootText:"~500 L",boot:500,acc:"Yes",tag:"Smoothest ride"},
+{rank:3,name:"Renault Duster",variant:"Iconic 1.3 DCT",type:"ICE",priceText:"₹23.12L",price:23.12,deliveryText:"~2–4 weeks",delivery:21,deliveryNote:"Usually one of the quicker deliveries",rangeText:"8–11 city / 15–18 hwy",range:13,rideText:"Very comfortable, SUV plush",ride:4,lengthText:"4,346 mm",length:4346,bootText:"518 L",boot:518,acc:"Yes",tag:"Best ICE buy"},
+{rank:4,name:"Maruti e Vitara",variant:"Alpha 61",type:"EV",priceText:"₹22.87L",price:22.87,deliveryText:"~2–8 weeks",delivery:35,deliveryNote:"Can be quick if allocated/in transit",rangeText:"~400–460 km",range:430,rideText:"Good, but rear can feel bouncy",ride:3,lengthText:"4,275 mm",length:4275,bootText:"~310 L",boot:310,acc:"Yes",tag:"Best range EV"},
+{rank:5,name:"Kia Seltos",variant:"HTX(A) Turbo DCT",type:"ICE",priceText:"₹23.47L",price:23.47,deliveryText:"~8–12 weeks",delivery:70,deliveryNote:"HTX(A) can take ~2–3 months",rangeText:"8–12 city / 14–17 hwy",range:12.75,rideText:"Comfortable but more controlled",ride:3,lengthText:"4,460 mm",length:4460,bootText:"447 L",boot:447,acc:"Yes",tag:"Balanced ICE pick"},
+{rank:6,name:"Hyundai Venue",variant:"HX10 Turbo DCT",type:"ICE",priceText:"₹18.60L",price:18.60,deliveryText:"~4–12 weeks",delivery:56,deliveryNote:"Demand and colour dependent",rangeText:"7–9 city / 13–15 hwy",range:11,rideText:"Comfortable, but not plush",ride:3,lengthText:"3,995 mm",length:3995,bootText:"375 L",boot:375,acc:"Yes",tag:"Best value buy"},
+{rank:7,name:"MG Windsor EV",variant:"Essence Pro 52.9",type:"EV",priceText:"₹22.31L",price:22.31,deliveryText:"~1–4 weeks",delivery:18,deliveryNote:"Often readily available",rangeText:"~300–410 km",range:355,rideText:"Plush comfort bias",ride:4,lengthText:"4,295 mm",length:4295,bootText:"up to ~604 L",boot:604,acc:"Yes",tag:"Best cabin space"},
+{rank:8,name:"MG ZS EV",variant:"Essence 50.3",type:"EV",priceText:"₹24.19L",price:24.19,deliveryText:"~1–3 weeks",delivery:14,deliveryNote:"Very quick if colour is in stock",rangeText:"~300–380 km",range:340,rideText:"Comfortable, mature tuning",ride:4,lengthText:"4,323 mm",length:4323,bootText:"448 L",boot:448,acc:"Yes",tag:"Most proven EV"},
+{rank:9,name:"Hyundai Creta EV",variant:"Excellence 42",type:"EV",priceText:"₹24.79L",price:24.79,deliveryText:"~2–6 weeks",delivery:28,deliveryNote:"Variant dependent",rangeText:"~300–320 km",range:310,rideText:"Comfortable family tune",ride:4,lengthText:"4,340 mm",length:4340,bootText:"433 L + frunk",boot:433,acc:"Yes",tag:"Premium mainstream"},
+{rank:10,name:"Tata Curvv EV",variant:"Empowered+ A 55",type:"EV",priceText:"~₹22.2L",price:22.2,deliveryText:"~1–4 weeks",delivery:18,deliveryNote:"Stock generally healthy",rangeText:"~350–430 km",range:390,rideText:"Balanced to slightly firm",ride:3,lengthText:"4,310 mm",length:4310,bootText:"500 L",boot:500,acc:"Yes",tag:"Alt EV pick"},
+{rank:11,name:"Maruti Victoris",variant:"ZXI+ (O) AWD 6AT",type:"ICE",priceText:"₹24.48L",price:24.48,deliveryText:"~4 weeks",delivery:28,deliveryNote:"Around one month currently",rangeText:"9–14 city / 15–20 hwy",range:14.5,rideText:"Balanced, not plush-first",ride:3,lengthText:"4,360 mm",length:4360,bootText:"446 L",boot:446,acc:"Yes",tag:"Best AWD"},
+{rank:12,name:"Mahindra BE 6",variant:"Three+ 70",type:"EV",priceText:"~₹26.4–27.6L",price:27.0,deliveryText:"~2–3 months",delivery:75,deliveryNote:"New Sporteq variants supply-constrained",rangeText:"~400–440 km",range:420,rideText:"Very good, slightly sporty",ride:4,lengthText:"4,371 mm",length:4371,bootText:"455 L + 45 L frunk",boot:455,acc:"Yes",tag:"Best performance & tech EV (stretch)"},
+{rank:13,name:"MG Hector Tomahawk EV",variant:"Essence",type:"EV",priceText:"₹26.47L",price:26.47,deliveryText:"Not established yet",delivery:999,deliveryNote:"Too new for a stable average",rangeText:"~380–430 km",range:405,rideText:"Expected comfort bias",ride:4,lengthText:"4,745 mm",length:4745,bootText:"610 L",boot:610,acc:"Yes",tag:"Big-family stretch"},
+{rank:14,name:"Mahindra XEV 9e",variant:"Pack Two 59",type:"EV",priceText:"₹29.04L",price:29.04,deliveryText:"~1–3 months",delivery:60,deliveryNote:"Highly stock/colour dependent",rangeText:"~360–430 km",range:395,rideText:"Plush, but too large/expensive",ride:4,lengthText:"4,789 mm",length:4789,bootText:"663 L + 150 L frunk",boot:663,acc:"Yes",tag:"Premium stretch"}
+];
+
+const el={list:document.getElementById("list"),sort:document.getElementById("sort"),dir:document.getElementById("dir"),type:document.getElementById("type"),q:document.getElementById("q")};
+function chip(c){return '<span class="chip '+(c.type==="EV"?"ev":"ice")+'">'+c.type+'</span><span class="chip '+(c.price<=25?"ok":"stretch")+'">'+(c.price<=25?"Within ₹25L":"Stretch")+'</span><span class="chip tag">'+c.tag+'</span>'}
+function card(c){return '<article class="card"><div class="head"><div class="rank">#'+c.rank+'</div><div><div class="name">'+c.name+'</div><div class="variant">'+c.variant+'</div><div class="chips">'+chip(c)+'</div></div></div><div class="metrics"><div class="m"><div class="k">Bengaluru OTR</div><div class="v">'+c.priceText+'</div></div><div class="m"><div class="k">Booking → delivery</div><div class="v">'+c.deliveryText+'</div><div class="small">'+c.deliveryNote+'</div></div><div class="m"><div class="k">Real-world</div><div class="v">'+c.rangeText+'</div></div><div class="m"><div class="k">Ride comfort</div><div class="v">'+c.rideText+'</div></div><div class="m"><div class="k">ACC Stop & Go</div><div class="v">'+c.acc+'</div></div><div class="m"><div class="k">Length</div><div class="v">'+c.lengthText+'</div></div><div class="m"><div class="k">Boot</div><div class="v">'+c.bootText+'</div></div><div class="m"><div class="k">Verdict</div><div class="v">'+c.tag+'</div></div></div></article>'}
+function render(){let a=cars.filter(c=>el.type.value==="all"||c.type===el.type.value);let q=el.q.value.trim().toLowerCase();if(q)a=a.filter(c=>(c.name+" "+c.variant+" "+c.tag).toLowerCase().includes(q));let k=el.sort.value,d=el.dir.value;a.sort((x,y)=>{let v=x[k]-y[k];return d==="asc"?v:-v});el.list.innerHTML=a.map(card).join("")}
+[el.sort,el.dir,el.type].forEach(x=>x.addEventListener("change",render));el.q.addEventListener("input",render);el.sort.value="rank";el.dir.value="asc";render();
+</script>
+</body></html>
